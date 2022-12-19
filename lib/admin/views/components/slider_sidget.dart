@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_start/admin/providers/admin_provider.dart';
 import 'package:flutter/material.dart' hide Slider;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,11 @@ class SliderWidget extends StatelessWidget {
                         radius: 20,
                         backgroundColor: Colors.white,
                         child: IconButton(
-                            onPressed: () {}, icon: Icon(Icons.delete)),
+                            onPressed: () {
+                              Provider.of<AdminProvider>(context,listen: false)
+                                  .deleteSlider(slider);
+                            },
+                            icon: Icon(Icons.delete)),
                       ),
                       SizedBox(
                         height: 10,

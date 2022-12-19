@@ -38,7 +38,7 @@ class _AdminDashBoardState extends State<AdminDashBoard> {
                               'https://cdn4.iconfinder.com/data/icons/gradient-circle-blue/36/2164-512.png',
                           title: 'Categories Settings'),
                       MyCardWidget(
-                          nextPage: 'AddNewCategory',
+                          nextPage: 'AddNewSliderScreen',
                           imageUrl:
                               'https://cdn-icons-png.flaticon.com/512/295/295144.png',
                           title: 'Advertisements Settings'),

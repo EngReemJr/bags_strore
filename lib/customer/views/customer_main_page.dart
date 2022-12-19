@@ -22,15 +22,15 @@ class HomePage extends StatelessWidget {
              Container(
                 child: Column(
               children: [
-                Expanded(
-                  child: Container(
+          
+    Container(
                     child: CarouselSlider(
                       options: CarouselOptions(
-                          height: 500.h,
+                          height: 270.h,
                           // onPageChanged: updateIndex,
                           autoPlay: true,
                           viewportFraction: 1),
-                      items: products.map((i) {
+                      items: provider.allSliders!.map((i) {
                         return Builder(
                           builder: (BuildContext context) {
                             return InkWell(
@@ -52,25 +52,27 @@ class HomePage extends StatelessWidget {
                                               Color(0xff657575)
                                                   .withOpacity(0.8),
                                               BlendMode.dstATop),
-                                          image: AssetImage(i.imageUrl),
-                                          fit: BoxFit.contain)),
+                                          image: NetworkImage(i!.imageUrl!),
+                                          fit: BoxFit.cover)),
                                   child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text(
-                                          i.price.toString() + '\$',
+                                      /*  Text(
+                                          //i.price.toString() + '\$',
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          i.name,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white),
+                                        ),*/
+                                        Expanded(
+                                          child: Text(
+                                            i.title!,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white),
+                                          ),
                                         ),
                                       ]),
                                   // Color(0xffa973ab),
@@ -80,7 +82,7 @@ class HomePage extends StatelessWidget {
                       }).toList(),
                     ),
                   ),
-                ),
+                
  
      //height: 140.h,
       Container(

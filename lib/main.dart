@@ -1,10 +1,77 @@
 import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_start/admin/views/screens/display_categories.dart';
+import 'package:firebase_start/admin/views/screens/main_admin_screen.dart';
+import 'package:firebase_start/auth/screen/main_screen.dart';
 import 'package:firebase_start/auth/screen/sign_in_screen.dart';
+import 'package:firebase_start/auth/screen/sign_up_screen.dart';
+import 'package:firebase_start/auth/screen/spalsh_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp( signInScreen());
+import 'admin/providers/admin_provider.dart';
+import 'admin/views/screens/add_new_slider.dart';
+import 'app_router/app_router.dart';
+import 'auth/providers/auth_provider.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const InitApp());
+}
+
+class InitApp extends StatelessWidget {
+  const InitApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) {
+            return AuthProvider();
+          },
+        ),
+        ChangeNotifierProvider<AdminProvider>(
+          create: (context) {
+            return AdminProvider();
+          },
+        ),
+      ],
+        child: ScreenUtilInit(
+        designSize: const Size(625, 1151),
+        builder: (context, child) {
+          return 
+       MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: AppRouter.appRouter.navigatorKey,
+        routes: {
+          // When navigating to the "/" route, build the FirstScreen widget.
+          'signUpScreen': (context) =>  signUpScreen(),
+          // When navigating to the "/second" route, build the SecondScreen widget.
+          'myProfilePage': (context) =>  myProfilePage(),
+          'AdminDashBoard': (context) =>  AdminDashBoard(),
+          'AddNewCategory' :(context) => AddNewCategory(),
+          'AddNewSliderScreen' :(context) => AddNewSliderScreen()
+        },
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // This is the theme of your application.
+
+          primarySwatch: Colors.blue,
+        ),
+        home: SplachScreen(),
+      );})
+    );
+  }
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

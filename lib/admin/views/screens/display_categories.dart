@@ -197,19 +197,23 @@ class AddNewCategory extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.stretch,
                                           children: [
-                                            Text(
-                                              'Arabic Category' +
-                                                  ': ' +
-                                                  provider
-                                                      .allCategories![index]!
-                                                      .nameAr,
+                                            Expanded(
+                                              child: Text(
+                                                'Arabic Category' +
+                                                    ': ' +
+                                                    provider
+                                                        .allCategories![index]!
+                                                        .nameAr,
+                                              ),
                                             ),
-                                            Text(
-                                              'English Category' +
-                                                  ': ' +
-                                                  provider
-                                                      .allCategories![index]!
-                                                      .nameEn,
+                                            Expanded(
+                                              child: Text(
+                                                'English Category' +
+                                                    ': ' +
+                                                    provider
+                                                        .allCategories![index]!
+                                                        .nameEn,
+                                              ),
                                             ),
                                           ]),
                                     ),

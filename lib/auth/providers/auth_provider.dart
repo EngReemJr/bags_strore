@@ -104,7 +104,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (userId != null) {
       getUser(userId);
-      AppRouter.appRouter.goToWidgetAndReplacement(myProfilePage());
+      AppRouter.appRouter.goToWidgetAndReplacement(HomePage());
     } else {
       AppRouter.appRouter.goToWidgetAndReplacement(signInScreen());
     }

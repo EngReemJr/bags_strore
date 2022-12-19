@@ -14,7 +14,7 @@ class signInScreen extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('assets/images/login.png'), fit: BoxFit.cover),
+            image: AssetImage('assets/images/login_screen.jpg'), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,

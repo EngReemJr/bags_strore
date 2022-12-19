@@ -51,6 +51,15 @@ class FirestoreHelper {
       return false;
     }
   }
+    Future<bool> deleteSlider(String sliderId) async {
+    try {
+      await firestore.collection('sliders').doc(sliderId).delete();
+      return true;
+    } on Exception catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
 
   Future<List<Category>?> getAllCategories() async {
     try {

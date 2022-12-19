@@ -12,11 +12,10 @@ import '../../data_reposetories/storage_helper.dart';
 import '../models/product.dart';
 
 class AdminProvider extends ChangeNotifier {
-   List<Slider>? allSliders;
+  List<Slider>? allSliders;
   AdminProvider() {
     getAllCategories();
-        getAllSliders();
-
+    getAllSliders();
   }
   String? requiredValidation(String? content) {
     if (content == null || content.isEmpty) {
@@ -26,7 +25,7 @@ class AdminProvider extends ChangeNotifier {
 
   // add new category
   File? imageFile;
-   TextEditingController sliderTitleController = TextEditingController();
+  TextEditingController sliderTitleController = TextEditingController();
   TextEditingController sliderUrlController = TextEditingController();
   TextEditingController catNameArController = TextEditingController();
   TextEditingController catNameEnController = TextEditingController();
@@ -74,38 +73,40 @@ class AdminProvider extends ChangeNotifier {
           .showCustomDialoug('Error', 'You have to pick image first');
     }
   }
- addNewSlider() async {
-   if (imageFile != null) {
-     if (categoryFormKey.currentState!.validate()) {
-       // add category process
-       AppRouter.appRouter.showLoadingDialoug();
-       String imageUrl = await StorageHelper.storageHelper
-           .uploadNewImage("cats_images", imageFile!);
-       Category category = Category(
-           imageUrl: imageUrl,
-           nameAr: catNameArController.text,
-           nameEn: catNameEnController.text);
-       String? id =
-           await FirestoreHelper.firestoreHelper.addNewCategory(category);
-       AppRouter.appRouter.hideDialoug();
-       if (id != null) {
-         category.id = id;
-         getAllCategories();
-         //allCategories!.add(category);
-         notifyListeners();
-         catNameArController.clear();
-         catNameEnController.clear();
-         imageFile = null;
-         notifyListeners();
-         AppRouter.appRouter
-             .showCustomDialoug('Success', 'Your category has been added');
-       }
-     }
-   } else {
-     AppRouter.appRouter
-         .showCustomDialoug('Error', 'You have to pick image first');
-   }
- }
+
+  addNewSlider() async {
+    if (imageFile != null) {
+      if (categoryFormKey.currentState!.validate()) {
+        // add category process
+        AppRouter.appRouter.showLoadingDialoug();
+        String imageUrl = await StorageHelper.storageHelper
+            .uploadNewImage("cats_images", imageFile!);
+        Category category = Category(
+            imageUrl: imageUrl,
+            nameAr: catNameArController.text,
+            nameEn: catNameEnController.text);
+        String? id =
+            await FirestoreHelper.firestoreHelper.addNewCategory(category);
+        AppRouter.appRouter.hideDialoug();
+        if (id != null) {
+          category.id = id;
+          getAllCategories();
+          //allCategories!.add(category);
+          notifyListeners();
+          catNameArController.clear();
+          catNameEnController.clear();
+          imageFile = null;
+          notifyListeners();
+          AppRouter.appRouter
+              .showCustomDialoug('Success', 'Your category has been added');
+        }
+      }
+    } else {
+      AppRouter.appRouter
+          .showCustomDialoug('Error', 'You have to pick image first');
+    }
+  }
+
   // get cateogies
   List<Category>? allCategories;
   List<Product>? allProducts;
@@ -170,6 +171,18 @@ class AdminProvider extends ChangeNotifier {
     }
   }
 
+  // delete category
+  deleteSlider(Slider slider) async {
+    AppRouter.appRouter.showLoadingDialoug();
+    bool deleteSuccess =
+        await FirestoreHelper.firestoreHelper.deleteSlider(slider.id!);
+    if (deleteSuccess) {
+      allSliders!.remove(slider);
+      notifyListeners();
+    }
+    AppRouter.appRouter.hideDialoug();
+  }
+
   TextEditingController productNameController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
@@ -194,7 +207,7 @@ class AdminProvider extends ChangeNotifier {
         if (id != null) {
           product.id = id;
           getAllProducts(catId);
-         // allProducts?.add(product);
+          // allProducts?.add(product);
           notifyListeners();
           productNameController.clear();
           productDescriptionController.clear();
@@ -210,7 +223,8 @@ class AdminProvider extends ChangeNotifier {
           .showCustomDialoug('Error', 'You have to pick image first');
     }
   }
-    getAllSliders() async {
+
+  getAllSliders() async {
     allSliders = await FirestoreHelper.firestoreHelper.getAllSliders();
   }
 
