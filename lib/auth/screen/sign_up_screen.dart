@@ -1,5 +1,6 @@
 import 'package:firebase_start/auth/providers/auth_provider.dart';
 import 'package:firebase_start/auth/screen/sign_in_screen.dart';
+import 'package:firebase_start/customer/views/components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +108,7 @@ class signUpScreen extends StatelessWidget {
     ),
     Expanded(child: SizedBox()),
                               const Text(
-                                'Sign In',
+                                'Sign Up',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 10, 0, 0),
                                   fontSize: 27,
@@ -120,7 +121,7 @@ class signUpScreen extends StatelessWidget {
                                 
                                 // const Color(0xff4c505b),
                                // Color(0xffd56561),
-Color(0xff640a06),
+backColor,
                                 child: IconButton(
                                   color: Color.fromARGB(255, 255, 255, 255),
                                   onPressed: () {

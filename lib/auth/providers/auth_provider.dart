@@ -2,7 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_start/auth/screen/sign_in_screen.dart';
-import 'package:firebase_start/customer/views/customer_main_page.dart';
+import 'package:firebase_start/auth/screen/start_screen.dart';
+import 'package:firebase_start/customer/views/screens/customer_main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:string_validator/string_validator.dart';
@@ -12,7 +13,7 @@ import '../../data_reposetories/authHelper.dart';
 import '../../data_reposetories/fireStore_helper.dart';
 import '../../data_reposetories/storage_helper.dart';
 import '../models/AppUser.dart';
-import '../screen/main_screen.dart';
+import '../screen/profile_screen.dart';
 
 class AuthProvider extends ChangeNotifier {
   GlobalKey<FormState> signInKey = GlobalKey();
@@ -26,12 +27,12 @@ class AuthProvider extends ChangeNotifier {
   late String email;
   late String password;
   AppUser? loggedUser;
-  saveEmail(String email) {
-    this.email = email;
-  }
 
-  savePassword(String password) {
-    this.password = password;
+  bool isDarkMode = false;
+  changeIsDarkMode() {
+    isDarkMode = !isDarkMode;
+    log(isDarkMode.toString());
+    notifyListeners();
   }
 
   String? emailValidation(String email) {
@@ -79,6 +80,7 @@ class AuthProvider extends ChangeNotifier {
 
   SignUp() async {
     if (signUpKey.currentState!.validate()) {
+      AppRouter.appRouter.showLoadingDialoug();
       String? result = await AuthHelper.authHelper.signUp(
           registerEmailController.text, passwordRegisterController.text);
       if (result != null) {
@@ -88,6 +90,7 @@ class AuthProvider extends ChangeNotifier {
             userName: userNameController.text,
             phoneNumber: phoneController.text));
         // AppRouter.appRouter.goToWidgetAndReplace(MainScreen());
+     // AppRouter.appRouter.hideDialoug();
 
       }
     }
@@ -106,7 +109,7 @@ class AuthProvider extends ChangeNotifier {
       getUser(userId);
       AppRouter.appRouter.goToWidgetAndReplacement(HomePage());
     } else {
-      AppRouter.appRouter.goToWidgetAndReplacement(signInScreen());
+      AppRouter.appRouter.goToWidgetAndReplacement(StartScreen());
     }
   }
 

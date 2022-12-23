@@ -13,6 +13,13 @@ import '../models/product.dart';
 
 class AdminProvider extends ChangeNotifier {
   List<Slider>? allSliders;
+  int totalPrice = 0;
+  changeTotalPrice(int newTotal) {
+    totalPrice = newTotal;
+    notifyListeners()
+    ;
+  }
+
   AdminProvider() {
     getAllCategories();
     getAllSliders();
@@ -186,6 +193,7 @@ class AdminProvider extends ChangeNotifier {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
+  TextEditingController productSizeController = TextEditingController();
   GlobalKey<FormState> addProductKey = GlobalKey();
   addNewProduct(String catId) async {
     if (imageFile != null) {
@@ -198,6 +206,8 @@ class AdminProvider extends ChangeNotifier {
             name: productNameController.text,
             description: productDescriptionController.text,
             price: productPriceController.text,
+            size: productSizeController.text,
+            count: 5,
             catId: catId);
 
         String? id =

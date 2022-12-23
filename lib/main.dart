@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_start/admin/views/screens/display_categories.dart';
 import 'package:firebase_start/admin/views/screens/main_admin_screen.dart';
-import 'package:firebase_start/auth/screen/main_screen.dart';
+import 'package:firebase_start/auth/screen/profile_screen.dart';
 import 'package:firebase_start/auth/screen/sign_in_screen.dart';
 import 'package:firebase_start/auth/screen/sign_up_screen.dart';
 import 'package:firebase_start/auth/screen/spalsh_screen.dart';
@@ -50,6 +50,10 @@ class InitApp extends StatelessWidget {
         builder: (context, child) {
           return 
        MaterialApp(
+         theme:Provider.of<AuthProvider>(context).isDarkMode
+          ? 
+          ThemeData.dark()
+        : ThemeData.light(),
         debugShowCheckedModeBanner: false,
         navigatorKey: AppRouter.appRouter.navigatorKey,
         routes: {
@@ -59,14 +63,12 @@ class InitApp extends StatelessWidget {
           'myProfilePage': (context) =>  myProfilePage(),
           'AdminDashBoard': (context) =>  AdminDashBoard(),
           'AddNewCategory' :(context) => AddNewCategory(),
-          'AddNewSliderScreen' :(context) => AddNewSliderScreen()
+          'AddNewSliderScreen' :(context) => AddNewSliderScreen(),
+          
         },
         title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-
-          primarySwatch: Colors.blue,
-        ),
+  
+    
         home: SplachScreen(),
       );})
     );

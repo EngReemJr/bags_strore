@@ -1,6 +1,7 @@
 
 
 
+import 'package:firebase_start/customer/views/components/costome_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,8 @@ class EditCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("New Category"),
-      ),
+      appBar:CustomeAppBar()
+      ,
       body: Consumer<AdminProvider>(builder: (context, provider, w) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),

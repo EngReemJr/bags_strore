@@ -1,3 +1,4 @@
+import 'package:firebase_start/admin/views/components/ButtonWidget.dart';
 import 'package:firebase_start/customer/views/components/costome_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,20 +14,17 @@ class AddNewSliderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-     //.
-     //
-     // resizeToAvoidBottomInset: false,
+      //.
+      //
+      // resizeToAvoidBottomInset: false,
       appBar: CustomeAppBar(),
       //AppBar(
-       // title: Text('Add New Slider'),
-      
+      // title: Text('Add New Slider'),
+
       body: Consumer<AdminProvider>(builder: (context, provider, w) {
         return SingleChildScrollView(
-       
-       
-          child: Container (
-               height: 1500
-   .h,
+          child: Container(
+            height: 1500.h,
             child: Column(
               children: [
                 InkWell(
@@ -69,43 +67,41 @@ class AddNewSliderScreen extends StatelessWidget {
                       SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
-                        height: 50,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              provider.AddNewSlider();
-                            },
-                            child: Text('Add New Slider')),
-                      )
+
+MyButtonWidget('Add New Slider',provider.addNewSlider),
+
+
+
+
                     ],
                   ),
                 ),
                 Expanded(
-              
-               //   child: Container(
+
+                    //   child: Container(
                     //  height: 140.h,
-                      child:
-                                 provider.allSliders == null
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : provider.allSliders!.isEmpty
-                      ? Center(
-                          child: Text('No Sliders Found'),
-                        )
-                      : ListView.builder(
-                       // s
-                       // scrollDirection: Axis.horizontal,
-                          itemCount: provider.allSliders!.length,
-                          itemBuilder: (context, index) {
-                            return SliderWidget(provider.allSliders![index]);
-                          })
-                      
-                      
-                   //   )
-                ),
-               SizedBox(height: 100.h,)
+                    child: provider.allSliders == null
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : provider.allSliders!.isEmpty
+                            ? Center(
+                                child: Text('No Sliders Found'),
+                              )
+                            : ListView.builder(
+                                // s
+                                // scrollDirection: Axis.horizontal,
+                                itemCount: provider.allSliders!.length,
+                                itemBuilder: (context, index) {
+                                  return SliderWidget(
+                                      provider.allSliders![index]);
+                                })
+
+                    //   )
+                    ),
+                SizedBox(
+                  height: 100.h,
+                )
               ],
             ),
           ),

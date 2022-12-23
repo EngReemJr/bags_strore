@@ -2,6 +2,7 @@
 
 import 'package:firebase_start/auth/providers/auth_provider.dart';
 import 'package:firebase_start/auth/screen/sign_up_screen.dart';
+import 'package:firebase_start/customer/views/components/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +72,7 @@ class signInScreen extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: 30,
-                      backgroundColor: const Color(0xff4c505b),
+                      backgroundColor: backColor,
                       child: IconButton(
                         color: Colors.white,
                         onPressed: () {
@@ -103,17 +104,7 @@ class signInScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // TextButton(
-                      //   onPressed: () {},
-                      //   child: const Text(
-                      //     'Forgot Password',
-                      //     style: TextStyle(
-                      //       decoration: TextDecoration.underline,
-                      //       fontSize: 18,
-                      //       color: Color(0xff4c505b),
-                      //     ),
-                      //   ),
-                      // ),
+                     
                     ]),
               ]));}),
 

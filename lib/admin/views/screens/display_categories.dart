@@ -1,11 +1,14 @@
+import 'package:firebase_start/admin/views/components/ButtonWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../app_router/app_router.dart';
 import '../../../auth/component/custome_textFeild.dart';
 import '../../../customer/views/components/costome_appbar.dart';
 import '../../providers/admin_provider.dart';
+import 'display_products.dart';
 
 class AddNewCategory extends StatelessWidget {
   @override
@@ -81,45 +84,15 @@ class AddNewCategory extends StatelessWidget {
                   SizedBox(
                     height: 8,
                   ),
-                  Row(children: [
-                    Expanded(child: SizedBox()),
-                    Container(
-                      width: 180.w,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(41),
-                        color: Color.fromARGB(255, 249, 250, 244),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 228, 234, 224),
-                            blurRadius: 15.0, // soften the shadow
-                          )
-                        ],
-                      ),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(41),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Color(0xffd56561)
-                                // Color.fromARGB(
-                                //  255, 253, 194, 42), // Background color
-                                ),
-                            onPressed: () {
-                              provider.addNewCategory();
-                            },
-                            child: Text(
-                              'Add New Category',
-                              style: TextStyle(
-                                fontSize: 8,
-                                color: Color.fromARGB(255, 254, 253, 253),
-                              ),
-                            ),
-                          )),
-                    ),
-                  ]),
+                  MyButtonWidget('Add New Category',provider.addNewCategory),
                   Divider(),
                   Expanded(
-                    child: Container(
+                child:    provider.allCategories == null 
+? const Center(
+    child: CircularProgressIndicator(),
+  ):
+                    
+                     Container(
                         height: 400.h,
 
                         child: GridView.builder(
@@ -131,93 +104,102 @@ class AddNewCategory extends StatelessWidget {
                             ),
                             itemCount: provider.allCategories!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                // color: Colors.amber,
-                                // child: Center(child: Text('$index')),
-                                child: Column(
-                                  children: [
-                                    Stack(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(13)),
-                                          child: SizedBox(
-                                              //width: double.infinity,
-                                                height: 160.h,
-                                              child: Image.network(
-                                            provider.allCategories![index]!
-                                                .imageUrl,
-                                            //'https://iconstyle.ae/wp-content/uploads/2022/09/2022_08_20_14_09_IMG_0144.jpg',
-                                            fit: BoxFit.cover,
-                                          )),
-                                        ),
-                                        Positioned(
-                                            right: 10,
-                                            top: 5,
-                                            child: Column(
+                              return InkWell(
+                                onTap: () {
+                                    provider
+            .getAllProducts(provider.allCategories![index].id!);
+        AppRouter.appRouter.goToWidget(AllProductsScreen(provider.allCategories![index].id!));
+                                },
+                                child: Card(
+                                  // color: Colors.amber,
+                                  // child: Center(child: Text('$index')),
+                                  child: Column(
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(13)),
+                                            child: SizedBox(
+                                                //width: double.infinity,
+                                                 // height: 160.h,
+                                                child: Image.network(
+                                              provider.allCategories![index]!
+                                                  .imageUrl,
+                                              //'https://iconstyle.ae/wp-content/uploads/2022/09/2022_08_20_14_09_IMG_0144.jpg',
+                                              fit: BoxFit.cover,
+                                            )),
+                                          ),
+                                          Positioned(
+                                              right: 10,
+                                              top: 5,
+                                              child: Column(
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 20,
+                                                    backgroundColor: Colors.white,
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          Provider.of<AdminProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .deleteCategory(
+                                                                  provider.allCategories![
+                                                                      index]!);
+                                                        },
+                                                        icon: Icon(Icons.delete)),
+                                                  ),
+                                                  /*  SizedBox(
+                                                height: 5,
+                                              ),*/
+                                                  CircleAvatar(
+                                                    radius: 20,
+                                                    backgroundColor: Colors.white,
+                                                    child: IconButton(
+                                                        onPressed: () {
+                                                          Provider.of<AdminProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .goToEditCategoryPage(
+                                                                  provider.allCategories![
+                                                                      index]!);
+                                                        },
+                                                        icon: Icon(Icons.edit)),
+                                                  ),
+                                                ],
+                                              ))
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          margin: EdgeInsets.all(5),
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.stretch,
                                               children: [
-                                                CircleAvatar(
-                                                  radius: 20,
-                                                  backgroundColor: Colors.white,
-                                                  child: IconButton(
-                                                      onPressed: () {
-                                                        Provider.of<AdminProvider>(
-                                                                context,
-                                                                listen: false)
-                                                            .deleteCategory(
-                                                                provider.allCategories![
-                                                                    index]!);
-                                                      },
-                                                      icon: Icon(Icons.delete)),
+                                                Expanded(
+                                                  child: Text(
+                                                    'Arabic Category' +
+                                                        ': ' +
+                                                        provider
+                                                            .allCategories![index]!
+                                                            .nameAr,
+                                                  ),
                                                 ),
-                                                /*  SizedBox(
-                                              height: 5,
-                                            ),*/
-                                                CircleAvatar(
-                                                  radius: 20,
-                                                  backgroundColor: Colors.white,
-                                                  child: IconButton(
-                                                      onPressed: () {
-                                                        Provider.of<AdminProvider>(
-                                                                context,
-                                                                listen: false)
-                                                            .goToEditCategoryPage(
-                                                                provider.allCategories![
-                                                                    index]!);
-                                                      },
-                                                      icon: Icon(Icons.edit)),
+                                                Expanded(
+                                                  child: Text(
+                                                    'English Category' +
+                                                        ': ' +
+                                                        provider
+                                                            .allCategories![index]!
+                                                            .nameEn,
+                                                  ),
                                                 ),
-                                              ],
-                                            ))
-                                      ],
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(5),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                'Arabic Category' +
-                                                    ': ' +
-                                                    provider
-                                                        .allCategories![index]!
-                                                        .nameAr,
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                'English Category' +
-                                                    ': ' +
-                                                    provider
-                                                        .allCategories![index]!
-                                                        .nameEn,
-                                              ),
-                                            ),
-                                          ]),
-                                    ),
-                                  ],
+                                              ]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             })),

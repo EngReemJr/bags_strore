@@ -4,30 +4,50 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../admin/providers/admin_provider.dart';
-import '../../admin/views/components/slider_sidget.dart';
-import 'components/costome_appbar.dart';
-import 'components/navigation_appbar.dart';
-import 'components/slider_widget.dart';
+import '../../../admin/providers/admin_provider.dart';
+import '../../../admin/views/components/slider_sidget.dart';
+import '../../../auth/providers/auth_provider.dart';
+import '../components/costome_appbar.dart';
+import '../components/navigation_appbar.dart';
+import '../components/slider_widget.dart';
 
-class HomePage extends StatelessWidget {
-  List categories = ['Hand Bags' , 'Back Bags' , 'Heels' , 'Watches','Glasses'];
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  //List categories = ['Hand Bags' , 'Back Bags' , 'Heels' , 'Watches','Glasses'];
+ int currentIndex = 0;
+
+  updateIndex(x, v) {
+    currentIndex = x;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffeeecee),
-        appBar: CustomeAppBar(),
+        backgroundColor:
+        Provider.of<AuthProvider>(context).isDarkMode?
+        Color.fromARGB(255, 51, 50, 50):
+         Color(0xffeeecee),
+        appBar: CustomeAppBar(true),
         body: Consumer<AdminProvider>(builder: (context, provider, index) {
           return 
              Container(
-                child: Column(
+                child: provider.allSliders == null || provider.allCategories==null
+      ? const Center(
+          child: CircularProgressIndicator(),
+        ):
+                 Column(
               children: [
           
     Container(
                     child: CarouselSlider(
                       options: CarouselOptions(
                           height: 270.h,
-                          // onPageChanged: updateIndex,
+                           onPageChanged: updateIndex,
                           autoPlay: true,
                           viewportFraction: 1),
                       items: provider.allSliders!.map((i) {
@@ -82,64 +102,38 @@ class HomePage extends StatelessWidget {
                       }).toList(),
                     ),
                   ),
-                
- 
-     //height: 140.h,
+   Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(provider.allSliders!.length,
+                              (index) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(horizontal: 3),
+                              height: index == currentIndex ? 10 : 8,
+                              width: index == currentIndex ? 10 : 8,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: index == currentIndex
+                                    ? Colors.blue
+                                    : Colors.grey,
+                              ),
+                            );
+                          }),
+                        ),
+              Row(children: [Text('All Categories'),Expanded(child: SizedBox()),Icon(Icons.arrow_forward)],) ,      
+
       Container(
-      height: 140.h,
+      height: 230.h,
      child: Center(
        child: ListView.builder(
-         itemCount: categories.length,
+         itemCount:provider.allCategories!.length,
          itemBuilder: (context, index) {
-           return MySliderWidget(categories[index].toString());
+           return MySliderWidget(provider.allCategories![index]);
          },
          scrollDirection: Axis.horizontal,
          padding: const EdgeInsets.all(8),
        ),
      )),
-
-                Container(
-                  height: 150.h,
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      Expanded(child: SizedBox()),
-                      Center(
-                          child: Container(
-                        width: 300.w,
-                        height: 100.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(41),
-                          color: Color.fromARGB(255, 249, 250, 244),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 228, 234, 224),
-                              blurRadius: 15.0, // soften the shadow
-                            )
-                          ],
-                        ),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(41),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Color(0xffca8094)
-                                  // Color.fromARGB(
-                                  //  255, 253, 194, 42), // Background color
-                                  ),
-                              onPressed: () {},
-                              child: Text(
-                                'Palce Order',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 77, 79, 66),
-                                ),
-                              ),
-                            )),
-                      ))
-                    ],
-                  ),
-                ),
-              ],
+ ],
             ),
           );
         })

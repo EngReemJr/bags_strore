@@ -17,7 +17,7 @@ class CategoryWidget extends StatelessWidget {
       onTap: () {
         Provider.of<AdminProvider>(context, listen: false)
             .getAllProducts(category.id!);
-        AppRouter.appRouter.goToWidget(AllProductsScreen());
+        AppRouter.appRouter.goToWidget(AllProductsScreen(category.id!));
       },
       child: Container(
         margin: EdgeInsets.all(5),

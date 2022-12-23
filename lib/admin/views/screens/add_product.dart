@@ -1,4 +1,6 @@
 
+import 'package:firebase_start/admin/views/components/ButtonWidget.dart';
+import 'package:firebase_start/customer/views/components/costome_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +14,10 @@ class AddNewProduct extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("New Product"),
-      ),
+      resizeToAvoidBottomInset: false,
+      appBar: CustomeAppBar(),
+        
+      
       body: Consumer<AdminProvider>(builder: (context, provider, w) {
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -67,17 +70,14 @@ class AddNewProduct extends StatelessWidget {
                   label: 'Product Price',
                   validation: provider.requiredValidation,
                 ),
-                const Spacer(),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      provider.addNewProduct(catId);
-                    },
-                    child: const Text('Add New Product'),
-                  ),
-                )
+                  CustomTextfield(
+    controller: provider.productSizeController,
+    label: 'Product Size',
+    validation: provider.requiredValidation,
+  ),
+                const Spacer()
+                ,
+                MyButtonWidget('Add New Product', provider.addNewProduct,catId)
               ],
             ),
           ),

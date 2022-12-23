@@ -43,8 +43,7 @@ class SliderWidget extends StatelessWidget {
                         backgroundColor: Colors.white,
                         child: IconButton(
                             onPressed: () {
-                              Provider.of<AdminProvider>(context,listen: false)
-                                  .deleteSlider(slider);
+                              Provider.of<AdminProvider>(context,listen: false)                                  .deleteSlider(slider);
                             },
                             icon: Icon(Icons.delete)),
                       ),

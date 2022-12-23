@@ -8,7 +8,7 @@ class Product {
   String description;
   String price;
   String imageUrl;
-
+  int count;
   String? size;
   Color? color;
   Product({
@@ -18,8 +18,9 @@ class Product {
     required this.description,
     required this.price,
     required this.imageUrl,
-     this.size,
-     this.color,
+    required this.count,
+    this.size,
+    this.color,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,8 +31,9 @@ class Product {
       'description': description,
       'price': price,
       'imageUrl': imageUrl,
+      'count': count,
       'size': size,
-      'color': color!.value,
+      'color': color?.value,
     };
   }
 
@@ -43,8 +45,9 @@ class Product {
       description: map['description'] ?? '',
       price: map['price'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
-      size: map['size'] ?? '',
-      color: Color(map['color']),
+      count: map['count']?.toInt() ?? 0,
+      size: map['size'],
+      color: map['color'] != null ? Color(map['color']) : null,
     );
   }
 
@@ -60,6 +63,7 @@ class Product {
     String? description,
     String? price,
     String? imageUrl,
+    int? count,
     String? size,
     Color? color,
   }) {
@@ -70,6 +74,7 @@ class Product {
       description: description ?? this.description,
       price: price ?? this.price,
       imageUrl: imageUrl ?? this.imageUrl,
+      count: count ?? this.count,
       size: size ?? this.size,
       color: color ?? this.color,
     );
@@ -77,7 +82,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(id: $id, catId: $catId, name: $name, description: $description, price: $price, imageUrl: $imageUrl, size: $size, color: $color)';
+    return 'Product(id: $id, catId: $catId, name: $name, description: $description, price: $price, imageUrl: $imageUrl, count: $count, size: $size, color: $color)';
   }
 
   @override
@@ -91,6 +96,7 @@ class Product {
       other.description == description &&
       other.price == price &&
       other.imageUrl == imageUrl &&
+      other.count == count &&
       other.size == size &&
       other.color == color;
   }
@@ -103,11 +109,12 @@ class Product {
       description.hashCode ^
       price.hashCode ^
       imageUrl.hashCode ^
+      count.hashCode ^
       size.hashCode ^
       color.hashCode;
   }
 }
-
+/*
 List<Product> products = [
   Product(
       id: '1',
@@ -116,7 +123,8 @@ List<Product> products = [
       size: '12',
       description: dummyText,
       imageUrl: "assets/images/bag_1.png",
-      color: Color(0xFF3D82AE), catId: '1'),
+      color: Color(0xFF3D82AE),
+      catId: '1'),
   Product(
       id: '2',
       catId: '1',
@@ -167,3 +175,4 @@ List<Product> products = [
 
 String dummyText =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.";
+*/

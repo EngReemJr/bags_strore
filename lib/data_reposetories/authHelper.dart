@@ -9,9 +9,12 @@ class AuthHelper {
   static AuthHelper authHelper = AuthHelper._();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   Future<String?> signUp(String email, String password) async {
+    AppRouter.appRouter.hideDialoug();
     try {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
+      AppRouter.appRouter
+          .showCustomDialoug('Register Successfuly', 'you can login now');
       return userCredential.user?.uid;
     } on Exception catch (e) {
       AppRouter.appRouter
