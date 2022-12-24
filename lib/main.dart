@@ -16,6 +16,7 @@ import 'admin/providers/admin_provider.dart';
 import 'admin/views/screens/add_new_slider.dart';
 import 'app_router/app_router.dart';
 import 'auth/providers/auth_provider.dart';
+import 'data_reposetories/db_helper.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,6 +24,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  await DbHelper.dbHelper.initDatabase();
   runApp(const InitApp());
 }
 

@@ -24,7 +24,7 @@ class Category {
         imageUrl: map['imageUrl'] ?? '',
         nameAr: map['nameAr'] ?? '',
         nameEn: map['nameEn'] ?? '',
-        id: map['id'] ?? ' ');
+        id: map['id'] ?? '');
   }
 
   String toJson() => json.encode(toMap());

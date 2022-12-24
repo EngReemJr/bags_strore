@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_start/admin/models/Sliders.dart';
+import 'package:firebase_start/admin/models/cart_product.dart';
 import 'package:firebase_start/admin/models/category.dart';
 import 'package:firebase_start/admin/views/screens/edit_category.dart';
 import 'package:flutter/material.dart' hide Slider;
@@ -7,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_router/app_router.dart';
+import '../../data_reposetories/db_helper.dart';
 import '../../data_reposetories/fireStore_helper.dart';
 import '../../data_reposetories/storage_helper.dart';
 import '../models/product.dart';
@@ -16,13 +19,13 @@ class AdminProvider extends ChangeNotifier {
   int totalPrice = 0;
   changeTotalPrice(int newTotal) {
     totalPrice = newTotal;
-    notifyListeners()
-    ;
+    notifyListeners();
   }
 
   AdminProvider() {
     getAllCategories();
     getAllSliders();
+    getAllCartProducts();
   }
   String? requiredValidation(String? content) {
     if (content == null || content.isEmpty) {
@@ -221,6 +224,7 @@ class AdminProvider extends ChangeNotifier {
           notifyListeners();
           productNameController.clear();
           productDescriptionController.clear();
+          productSizeController.clear();
           productPriceController.clear();
           imageFile = null;
           notifyListeners();
@@ -268,6 +272,39 @@ class AdminProvider extends ChangeNotifier {
           .showCustomDialoug('Error', 'You have to pick image first');
     }
   }
+
+  List<CartProduct> allCartProducts = [];
+  getAllCartProducts() async {
+    totalPrice = 0;
+    allCartProducts = await DbHelper.dbHelper.getAllCart();
+    allCartProducts.map(
+      (e) {
+        log(e.price.toString());
+       // return totalPrice = totalPrice + int.parse(e.price);
+      },
+    );
+    changeTotalPrice(totalPrice);
+    notifyListeners();
+  }
+
+  insertNewProduct(Product product) async {
+    CartProduct cartProduct = CartProduct(
+        name: product.name,
+        imageUrl: product.imageUrl,
+        count: product.count,
+        price: ((int.parse(product.price)) * product.count).toString() ,
+        id: product.id,
+        size: product.size);
+
+    await DbHelper.dbHelper.insertNewCartProduct(cartProduct);
+    getAllCartProducts();
+  }
+
+  deleteCartProduct(CartProduct cartProduct) async {
+    await DbHelper.dbHelper.deleteCartProduct(cartProduct);
+    getAllCartProducts();
+  }
+
   // update category
 //   updateCategory()async{
 //     FirestoreHelper.firestoreHelper.updateCategory(category)

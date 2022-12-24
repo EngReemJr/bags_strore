@@ -30,18 +30,18 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Text('My Cart',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
              , Expanded(
-                child: Provider.of<AdminProvider>(context).allProducts == null
+                child: Provider.of<AdminProvider>(context).allCartProducts == null
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : ListView.builder(
-                        itemCount: provider.allProducts!.length,
+                        itemCount: provider.allCartProducts!.length,
                         itemBuilder: (context, Index) {
                           totalPrice = totalPrice +
-                              int.parse(provider.allProducts![Index]!.price);
+                              int.parse(provider.allCartProducts![Index]!.price);
                           // setStat
                           return Cart_Product_Widget(
-                              provider.allProducts![Index]);
+                              provider.allCartProducts![Index]);
                         },
                       ),
               ),

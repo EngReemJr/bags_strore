@@ -1,9 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_start/admin/providers/admin_provider.dart';
+import 'package:firebase_start/customer/views/components/cart_counter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../admin/models/product.dart';
 import 'constant.dart';
-
 
 class AddToCart extends StatelessWidget {
   const AddToCart({
@@ -25,31 +29,26 @@ class AddToCart extends StatelessWidget {
             width: 58,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(18),
-              border: Border.all(
-               color: Color.fromARGB(255, 121, 91, 35)
-              ),
+              border: Border.all(color: Color.fromARGB(255, 121, 91, 35)),
             ),
             child: IconButton(
-              icon: Icon(Icons.shopping_bag)
-              // SvgPicture.asset(
-               // "assets/icons/add_to_cart.svg",
-               // color: product.color,
-              ,
-              onPressed: () {},
+              icon: Icon(Icons.shopping_bag),
+              onPressed: () {
+                product!.count = CartCounterState.numOfItems;
+                
+                Provider.of<AdminProvider>(context, listen: false)
+                    .insertNewProduct(product!);
+              },
             ),
           ),
           Expanded(
-            child: SizedBox(
+            child: Container(
+              color: backColor,
               height: 50,
               child: TextButton(
-                
-               // shape: RoundedRectangleBorder(
-               //   borderRadius: BorderRadius.circular(18)),
-               // color: product.color,
-              // color :Colors.blue,
                 onPressed: () {},
                 child: Text(
-                  "Buy  Now".toUpperCase(),
+                  "Place Order".toUpperCase(),
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,

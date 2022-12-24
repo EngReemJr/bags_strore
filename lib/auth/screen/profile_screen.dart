@@ -21,30 +21,18 @@ class textBox extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Container(
-              height: 40,
-              child: hintText != 'mode'
-                  ? Text(
-                      hintText,
-                      style: TextStyle(
-                        letterSpacing: 2,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold,
+              height: 100.h,
+              child: 
+                    Text(
+                        hintText,
+                        style: TextStyle(
+                          letterSpacing: 2,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    )
-                  : Row(
-                      children: [
-                        Text('Change Theme:'),
-                        Expanded(child: SizedBox()),
-                        IconButton(
-                          icon: Icon(provider.isDarkMode
-                              ? Icons.light_mode
-                              : Icons.dark_mode),
-                          onPressed: () {
-                            provider.changeIsDarkMode();
-                          },
-                        )
-                      ],
-                    ),
+                  
+                  
               decoration: BoxDecoration(
                 color: Colors.white30,
                 borderRadius: BorderRadius.circular(10),
@@ -74,7 +62,7 @@ class _myProfilePageState extends State<myProfilePage> {
         child: Stack(alignment: Alignment.center, children: [
           Column(mainAxisAlignment: MainAxisAlignment.end, children: [
             Container(
-              height: 1000.h,
+              height: 800.h,
               width: double.infinity,
               child: provider.loggedUser == null
                   ? const Center(
@@ -146,10 +134,7 @@ class _myProfilePageState extends State<myProfilePage> {
                     elevation: 16,
                     style: const TextStyle(color: Colors.black),
                     onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                     // setState(() {
-                      //  dropdownValue = value!;
-                     // });
+                      
                       if (value == 'Sign Out') {
                         provider.signOut();
                       } else {

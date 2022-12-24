@@ -1,4 +1,5 @@
 import 'package:firebase_start/admin/models/product.dart';
+import 'package:firebase_start/customer/views/components/constant.dart';
 import 'package:flutter/material.dart' hide Slider;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -133,6 +134,8 @@ class _HomePageState extends State<HomePage> {
          padding: const EdgeInsets.all(8),
        ),
      )),
+                   Row(children: [Text('Special Offers'),Expanded(child: SizedBox()),Icon(Icons.arrow_forward)],) ,      
+
  ],
             ),
           );
@@ -141,20 +144,24 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar:  BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Me',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Shopping',
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_bag),
+            label: 'My Orders',
+          ),
+        /*  BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
+          )*/
         ],
        // currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xffa973ab),
+        selectedItemColor: backColor,
        // onTap: _onItemTapped,
       ),
         );
